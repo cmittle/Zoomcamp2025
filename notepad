@@ -16,3 +16,23 @@ docker run -it \
     --name=pg-admin \
     dpage/pgadmin4
 
+python ingest_data.py \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_data \
+    --url="https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet"
+
+
+docker build -t taxi_ingest:v001 .
+
+docker run -it taxi_ingest:v001 \
+    --user=root \
+    --password=root \
+    --host=pg-network \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_data \
+    --url="https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet"
