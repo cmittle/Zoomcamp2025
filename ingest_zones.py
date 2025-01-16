@@ -54,7 +54,7 @@ def main(params):
         #df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
         #df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
 
-        df.to_sql(name='yellow_taxi_data', con=engine, if_exists='append') 
+        df.to_sql(name='zones', con=engine, if_exists='append') 
         end_time = time()
         print('inserted another chunk... took %.3f second' % (end_time - start_time))
 
