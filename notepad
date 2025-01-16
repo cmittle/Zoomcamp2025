@@ -38,3 +38,23 @@ docker run -it \
     --db=ny_taxi \
     --table_name=yellow_taxi_data \
     --url="https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet"
+
+python ingest_zones.py \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_data \
+    --url="https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv"
+
+docker run -it \
+    --network=pg-network \
+  ingest_csv:v001 \
+    --user=root \
+    --password=root \
+    --host=pg-database \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=zones \
+    --url="https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv"
