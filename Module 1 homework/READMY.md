@@ -18,4 +18,13 @@ Question 2:Given the following docker-compose.yaml, what is the hostname and por
 
     Answer = localhost:5432
 
+**Prepare database by making dockerfile which launches and ingests green taxi data and zones in to database
+    Steps
+        1. Download green taxi data from Oct 2019. I downloaded parquet file since I know i can convert, not familliar with unzipping tarball.
+        2. create new local directory for green taxi data, make notepad for docker run command new database name ny_gtaxi to not cross wires with my 2024 workthrough and per slack notes using postgres17 from here forward
+        3. launch docker pg-database instance
+        4. launch jupter notebook, import pandas, download parquet data file (wget in vscode), use pandas to convert to csv, and check things.  Similar to yellow taxi data the pickup time and drop off schema needs to be overriden from text to datetime type.  create engine, establish connection, import headers, create iterator and import whole batch similar to 2024 exersize.
+        5. work on new dockerfile and ingestion script that i can use for automating this green trips import as well as zones.
+
+
 Question 3:
