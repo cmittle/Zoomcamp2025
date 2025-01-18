@@ -1,0 +1,9 @@
+FROM python:3.12.8
+#run docker container of python 3.9
+#RUN pip --version
+WORKDIR /app
+#copy file from host machine int to docker
+COPY pipcheck.sh pipcheck.sh
+#even though we're running python docker 
+#container we can force to enter at bash(ubuntu)
+ENTRYPOINT [ "bash", "pipcheck.sh"]
