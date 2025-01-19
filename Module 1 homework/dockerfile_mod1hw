@@ -10,9 +10,8 @@ RUN apt-get install wget
 #what directory to start in
 WORKDIR /app
 #copy file from host machine int to docker
-COPY ingest_zones.py ingest_zones.py
 COPY ingest_green.py ingest_green.py
 
 #run in python and run ingestion scripts for green taxi data as well as zone data
 #this prepares the databases
-ENTRYPOINT [ "python", "ingest_green.py", "ingest_zones.py" ]
+ENTRYPOINT [ "python", "ingest_green.py" ]

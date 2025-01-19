@@ -4,3 +4,5 @@
 
 #ignore this file path since git doesn't have permission to it
 /ny_taxi_postgres_data
+/Module 1 homework/ny_gtaxi_postgres_data
+/ny_gtaxi_postgres_data

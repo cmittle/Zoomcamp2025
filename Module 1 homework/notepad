@@ -15,3 +15,29 @@ docker run -it \
     --network=pg-network \
     --name=pg-admin \
     dpage/pgadmin4
+
+docker run -it \
+    --network=pg-network \
+  ingest_green:v001 \
+    --user=root \
+    --password=root \
+    --host=pg-database \
+    --port=5432 \
+    --db=ny_gtaxi \
+    --table_name=green_taxi_data \
+    --zones_table_name=zones \
+    --urlg="https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2019-10.parquet" \
+    --urlz="https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv"
+
+
+
+docker run -it \
+    --network=pg-network \
+  ingest_csv:v001 \
+    --user=root \
+    --password=root \
+    --host=pg-database \
+    --port=5432 \
+    --db=ny_gtaxi \
+    --table_name=zones \
+    --url="https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv"
