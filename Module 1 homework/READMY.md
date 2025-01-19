@@ -61,7 +61,8 @@ Part E: Select
         FROM green_taxi_data t
         WHERE t.trip_distance > 10.00
         ==> 35202
-    ANSWER: 104,838, 199,013, 109,645, 27,688, 35,202
+    
+    ANSWER = 104,838, 199,013, 109,645, 27,688, 35,202
 
 Question 4: Question 4. Longest trip (1 point)
     Select
@@ -70,7 +71,8 @@ Question 4: Question 4. Longest trip (1 point)
         ORDER BY trip_distance DESC
     LIMIT(1)
     ==>2019-10-31...to 2019-11-01...
-    ANSWER: 2019-10-31
+    
+    ANSWER = 2019-10-31
 
 Question 5: Which were the top pickup locations with over 13,000 in total_amount (across all trips) for 2019-10-18?
 
@@ -86,7 +88,8 @@ Question 5: Which were the top pickup locations with over 13,000 in total_amount
     GROUP BY zpu."Zone"
     ORDER BY total DESC
     LIMIT 5;
-    ANSWER==> East Harlem North, East Harlem South, Morningside Heights
+
+    ANSWER = East Harlem North, East Harlem South, Morningside Heights
 
 Question 6: For the passengers picked up in October 2019 in the zone name "East Harlem North" which was the drop off zone that had the largest tip?   Note: it's tip , not trip   We need the name of the zone, not the ID.
 
