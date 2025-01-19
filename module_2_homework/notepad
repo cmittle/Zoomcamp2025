@@ -1,0 +1,91 @@
+#Notes from videos on mod 2
+#What is Kestra... All in 1 Orchestration toool 
+#Looks really cool..but confused it looks like a web login thing, 
+#    but looking at the website it seems we launch this with docker..?
+
+#Is this a one time way to run it?  Can i just use docker run -it kestra next time?
+docker run --pull=always --rm -it -p 8080:8080 --user=root \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /tmp:/tmp kestra/kestra:latest server local
+#for some reason I had to manually forward port 8080, it didn't do it on it's own.
+
+
+
+tasks:
+  - id: extract
+    type: io.kestra.plugin.scripts.shell.Commands
+    outputFiles:
+      - "*.csv"
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    commands:
+      - wget -qO- https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{{inputs.taxi}}/{{render(vars.file)}}.gz | gunzip > {{render(vars.file)}}
+
+  - id: green_create_table
+    type: io.kestra.plugin.jdbc.postgresql.Queries
+    sql: |
+      CREATE TABLE IF NOT EXISTS {{render(vars.table)}} (
+        unique_row_id         text,
+        filename              text,
+        VendorID              text,
+        lpep_pickup_datetime  timestamp,
+        lpep_dropoff_datetime timestamp,
+        store_and_fwd_flag    text,
+        RatecodeID            text,
+        PULocationID          text,
+        DOLocationID          text,
+        passenger_count       integer,
+        trip_distance         double precision,
+        fare_amount           double precision,
+        extra                 double precision,
+        mta_tax               double precision,
+        trip_amount           double precision,
+        tolls_amount          double precision,
+        ehail_fee             double precision,
+        improvement_surcharge double precision,
+        total_amount          double precision,
+        payment_type          integer,
+        trip_type             integer,
+        congestion_surcharge  double precision
+      );
+
+
+
+  - id: set_label
+    type: io.kestra.plugin.core.execution.Labels
+    labels:
+        file: "{{render(vars.file)}}"
+        taxi: "{{inputs.taxi}}"
+  
+  - id: hello
+    type: io.kestra.plugin.core.log.Log
+    message: Hello World! 🚀
+
+
+
+pluginDefaults:
+  - type: io.kestra.plugin.jdbc.postgresql
+    values: 
+      url: jdbc:postgresql://host.docker.internal:5432/postgres-zoomcamp
+      username: kestra
+      password: k3str4
+
+
+#-v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+docker run -it \
+    -e POSTGRES_USER="root" \
+    -e POSTGRES_PASSWORD="root" \
+    -e POSTGRES_DB="postgres-zoomcamp" \
+    -v postgres-data:/var/lib/postgresql/data \
+    -p 5432:5432 \
+    --network=pg-network \
+    --name=pg-database \
+    postgres:17
+
+docker run -it \
+    -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+    -e PGADMIN_DEFAULT_PASSWORD="root" \
+    -p 8080:80 \
+    --network=pg-network \
+    --name=pg-admin \
+    dpage/pgadmin4
