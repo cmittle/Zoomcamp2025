@@ -90,9 +90,21 @@ Question 5: Which were the top pickup locations with over 13,000 in total_amount
 
 Question 6: For the passengers picked up in October 2019 in the zone name "East Harlem North" which was the drop off zone that had the largest tip?   Note: it's tip , not trip   We need the name of the zone, not the ID.
 
-    ANSWER:  ==> I currently cannot figure this one out :(
-
-    
+    ANSWER attempt 1:  ==> I currently cannot figure this one out :(
+        iobruno helped me observe i'm creating a cross join returning all possible combinations YUCK!  I need to look at different join types for this info.
+    QUERY: Select
+                t.tip_amount,
+                zpu."Zone" AS puzone,
+                t."DOLocationID",
+                zdo."Zone" AS dozone
+                FROM green_taxi_data t
+                JOIN zones zpu ON t."PULocationID" = zpu."LocationID"
+                JOIN zones zdo ON t."DOLocationID" = zdo."LocationID"
+                WHERE zpu."Zone" = 'East Harlem North'
+                ORDER BY t.tip_amount DESC 
+                
+            LIMIT 10
+    ANSWER ==> JFK Airport
 
 Question 7:
     

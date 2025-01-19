@@ -18,7 +18,7 @@ docker run -it \
 
 docker run -it \
     --network=pg-network \
-  ingest_green:v001 \
+  ingest_green:v002 \
     --user=root \
     --password=root \
     --host=pg-database \

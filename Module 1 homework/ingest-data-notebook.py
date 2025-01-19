@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+####
+#this is my jupyter notebook from testing.  I've exported to script and cleaned it up
+#but reviewed and pasted results in to ingest_green.py file
+###
 import pandas as pd
 
 import os
